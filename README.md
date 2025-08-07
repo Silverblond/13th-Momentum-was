@@ -1,2 +1,11 @@
-# 13th-Momentum-was
+# 13th-Momentum-web
 🦁영남대 멋쟁이사자처럼 13기 Momentum입니다
+
+
+## 👥 팀원 소개
+
+
+| <img src="https://avatars.githubusercontent.com/u/78362785?v=4" width="150" height="150"/> | <img src="https://avatars.githubusercontent.com/u/84740013?v=4" width="150" height="150"/> | <img src="https://avatars.githubusercontent.com/u/162142840?v=4" width="150" height="150"/> | <img src="https://avatars.githubusercontent.com/u/122366232?v=4" width="150" height="150"/> | <img src="https://avatars.githubusercontent.com/u/35758306?v=4" width="150" height="150"/> | <img src="https://avatars.githubusercontent.com/u/135015634?v=4" width="150" height="150"/> |
+|:-------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------:|
+|                                             BE                                              |                                             FE                                              |                                             FE / Leader                                             |                                             FE                                             |                                             P&D                                              |                                             BE                                              |
+|                     Kim Dong Gyun<br/>[@Silverblond](https://github.com/Silverblond)                     |                  Kim Jeong Un<br/>[@vni911](https://github.com/vni911)                   |                      Ryu Seung Hyun<br/>[@RSH0770](https://github.com/RSH0770)                      |           Cho Eun Byeol<br/>[@eveveev](https://github.com/eveveev)           |           Choi Seon Woo<br/>[@choibyeoli](https://github.com/choibyeoli)           |           Han Su Bin<br/>[@hansubsub](https://github.com/hansubsub)           |
