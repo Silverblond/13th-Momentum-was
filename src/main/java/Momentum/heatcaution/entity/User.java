@@ -33,14 +33,15 @@ public class User {
 */
 
     @Builder
-    public User(String username, String password, String name, String phone,LocalDate birth, Role role) {
+    public User(String username, String password, String name, String phone, LocalDate birth, Role role) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.birth = birth;
         this.phone = phone;
-        this.role = role.USER;
+        this.role = (role != null ? role : Role.USER); // 전달값 없으면 USER
     }
+
 
     public enum Role {
         USER, ADMIN

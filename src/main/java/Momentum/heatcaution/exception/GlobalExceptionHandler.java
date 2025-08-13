@@ -46,7 +46,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ErrorResponse.of("PASSWORD_MISMATCH", e.getMessage()));
     }
-
+    //관리자가 아닐 경우
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalState(IllegalStateException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(ErrorResponse.of("NOT_ADMIN", e.getMessage()));
+    }
 
 
     // NullPointer, 런타임 오류... 여러 오류 -> 500
