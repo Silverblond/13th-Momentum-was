@@ -103,6 +103,7 @@ public class ProtectorService {
         ProtectorDto dto = new ProtectorDto();
         dto.setId(protector.getId());
         dto.setName(protector.getName());
+        dto.setRelation(protector.getRelation());
         dto.setPhone(protector.getPhone());
         return dto;
     }
