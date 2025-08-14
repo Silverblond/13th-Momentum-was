@@ -57,6 +57,7 @@ public class GlobalExceptionHandler {
     // NullPointer, 런타임 오류... 여러 오류 -> 500
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleAny(Exception e) {
+        //e.printStackTrace();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ErrorResponse.of("INTERNAL_ERROR", "서버 오류가 발생했습니다."));
     }
