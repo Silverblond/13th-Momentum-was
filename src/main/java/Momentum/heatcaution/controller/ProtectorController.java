@@ -1,9 +1,9 @@
 package Momentum.heatcaution.controller;
 
 import Momentum.heatcaution.dto.ProtectorDto;
+import Momentum.heatcaution.exception.LoginRequiredException;
 import Momentum.heatcaution.service.ProtectorService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,7 +30,7 @@ public class ProtectorController {
     private String getUsernameFromSession(HttpSession session) {
         String username = (String) session.getAttribute("loggedInUser");
         if (username == null) {
-            throw new IllegalStateException("로그인이 필요합니다.");
+            throw new LoginRequiredException();
         }
         return username;
     }
