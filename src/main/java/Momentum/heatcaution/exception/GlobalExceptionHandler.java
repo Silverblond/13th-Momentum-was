@@ -46,13 +46,26 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ErrorResponse.of("PASSWORD_MISMATCH", e.getMessage()));
     }
-    //관리자가 아닐 경우
+    //로그인 필요 예외를 처리 -> 401
+    @ExceptionHandler(LoginRequiredException.class)
+    public ResponseEntity<ErrorResponse> handleLoginRequired(LoginRequiredException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(ErrorResponse.of("LOGIN_REQUIRED", e.getMessage()));
+    }
+
+    //보호자 등록 한도 초과 예외를 처리 -> 400
+    @ExceptionHandler(ProtectorLimitExceededException.class)
+    public ResponseEntity<ErrorResponse> handleProtectorLimitExceeded(ProtectorLimitExceededException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorResponse.of("LIMIT_EXCEEDED", e.getMessage()));
+    }
+
+    //'관리자 권한' 문제처럼 금지된 접근에만 사용
     @ExceptionHandler(IllegalStateException.class)
     public ResponseEntity<ErrorResponse> handleIllegalState(IllegalStateException e) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                .body(ErrorResponse.of("NOT_ADMIN", e.getMessage()));
+                .body(ErrorResponse.of("FORBIDDEN_ACCESS", e.getMessage()));
     }
-
 
     // NullPointer, 런타임 오류... 여러 오류 -> 500
     @ExceptionHandler(Exception.class)

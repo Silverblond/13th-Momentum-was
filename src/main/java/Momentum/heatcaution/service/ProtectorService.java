@@ -3,6 +3,7 @@ package Momentum.heatcaution.service;
 import Momentum.heatcaution.dto.ProtectorDto;
 import Momentum.heatcaution.entity.Protector;
 import Momentum.heatcaution.entity.User;
+import Momentum.heatcaution.exception.ProtectorLimitExceededException;
 import Momentum.heatcaution.repository.ProtectorRepository;
 import Momentum.heatcaution.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -33,7 +34,7 @@ public class ProtectorService {
         User user = findUserByUsername(username);
 
         if (protectorRepository.countByUser(user) >= MAX_PROTECTOR_COUNT) {
-            throw new IllegalStateException("보호자는 최대 " + MAX_PROTECTOR_COUNT + "명까지 등록할 수 있습니다.");
+            throw new ProtectorLimitExceededException("보호자는 최대 " + MAX_PROTECTOR_COUNT + "명까지 등록할 수 있습니다.");
         }
 
         Protector protector = new Protector();
@@ -103,6 +104,7 @@ public class ProtectorService {
         ProtectorDto dto = new ProtectorDto();
         dto.setId(protector.getId());
         dto.setName(protector.getName());
+        dto.setRelation(protector.getRelation());
         dto.setPhone(protector.getPhone());
         return dto;
     }
