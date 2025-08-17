@@ -49,4 +49,19 @@ public class UserService {
     }
 
 
+    @Transactional
+    public String updateUsername(String currentUsername, String newUsername) {
+        //새로운 아이디가 이미 존재하는지
+        if (userRepository.existsByUsername(newUsername)) {
+            throw new IllegalStateException("이미 사용 중인 아이디 입니다.");
+        }
+        //현재 사용자 DB 조회
+        User user = userRepository.findByUsername(currentUsername)
+                .orElseThrow(UserNotFoundException::new);
+
+        //User 엔티티의 username 변경
+        user.updateUsername(newUsername);
+
+        return user.getUsername();
+    }
 }
