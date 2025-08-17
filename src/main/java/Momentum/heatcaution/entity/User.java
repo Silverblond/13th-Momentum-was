@@ -42,6 +42,10 @@ public class User {
         this.role = (role != null ? role : Role.USER); // 전달값 없으면 USER
     }
 
+    // username 업데이트
+    public void updateUsername(String newUsername) {
+        this.username = newUsername;
+    }
 
     public enum Role {
         USER, ADMIN
