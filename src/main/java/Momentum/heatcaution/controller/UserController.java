@@ -62,7 +62,6 @@ public class UserController {
         return ResponseEntity.ok("로그아웃할 세션이 없습니다.");
     }
     //사용자 이름 반환
-// 사용자 이름만 반환
     @Operation(summary = "사용자 이름 조회", description = "회원가입한 사용자의 이름을 반환합니다.")
     @ApiResponse(responseCode = "200", description = "사용자 이름 반환 성공")
     @GetMapping("/name")
