@@ -66,15 +66,6 @@ public class UserController {
         return ResponseEntity.ok("로그아웃할 세션이 없습니다.");
     }
 
-    @GetMapping("/me")
-    public ResponseEntity<?> getMyUsername(HttpSession session) {
-        String username = (String) session.getAttribute("loggedInUser");
-        if (username == null) {
-            throw new LoginRequiredException();
-        }
-        return ResponseEntity.ok(Map.of("username", username));
-    }
-
     @PatchMapping("/username")
     public ResponseEntity<?> updateUsername(@RequestBody @Valid UpdateUsernameRequest request, HttpSession session) {
         String username = (String) session.getAttribute("loggedInUser");
