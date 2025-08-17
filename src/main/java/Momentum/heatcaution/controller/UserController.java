@@ -2,7 +2,6 @@ package Momentum.heatcaution.controller;
 
 import Momentum.heatcaution.dto.LoginRequest;
 import Momentum.heatcaution.dto.RegisterRequest;
-import Momentum.heatcaution.entity.User;
 import Momentum.heatcaution.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
