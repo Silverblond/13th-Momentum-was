@@ -2,6 +2,7 @@ package Momentum.heatcaution.controller;
 
 import Momentum.heatcaution.dto.LoginRequest;
 import Momentum.heatcaution.dto.RegisterRequest;
+import Momentum.heatcaution.dto.UpdateUsernameRequest;
 import Momentum.heatcaution.exception.LoginRequiredException;
 import Momentum.heatcaution.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -72,5 +73,19 @@ public class UserController {
             throw new LoginRequiredException();
         }
         return ResponseEntity.ok(Map.of("username", username));
+    }
+
+    @PatchMapping("/username")
+    public ResponseEntity<?> updateUsername(@RequestBody @Valid UpdateUsernameRequest request, HttpSession session) {
+        String username = (String) session.getAttribute("loggedInUser");
+        if (username == null) {
+            throw new LoginRequiredException();
+        }
+        //DB와 엔티티 username 변경
+        String updatedUsername = userService.updateUsername(username, request.newUsername());
+        //세션에 저장된 username정보 변경
+        session.setAttribute("loggedInUser", updatedUsername);
+
+        return ResponseEntity.ok("아이디가 성공적으로 변경되었습니다.");
     }
 }
