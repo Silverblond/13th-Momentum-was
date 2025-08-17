@@ -48,5 +48,11 @@ public class UserService {
         return username + " 로그아웃 성공";
     }
 
-
+    //사용자 이름 반환
+    @Transactional(readOnly = true)
+    public String getNameByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(UserNotFoundException::new)
+                .getName();
+    }
 }

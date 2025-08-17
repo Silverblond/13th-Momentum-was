@@ -2,6 +2,7 @@ package Momentum.heatcaution.controller;
 
 import Momentum.heatcaution.dto.LoginRequest;
 import Momentum.heatcaution.dto.RegisterRequest;
+import Momentum.heatcaution.entity.User;
 import Momentum.heatcaution.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -60,5 +61,18 @@ public class UserController {
             return ResponseEntity.ok(logoutMessage);
         }
         return ResponseEntity.ok("로그아웃할 세션이 없습니다.");
+    }
+    //사용자 이름 반환
+// 사용자 이름만 반환
+    @Operation(summary = "사용자 이름 조회", description = "회원가입한 사용자의 이름을 반환합니다.")
+    @ApiResponse(responseCode = "200", description = "사용자 이름 반환 성공")
+    @GetMapping("/name")
+    public ResponseEntity<String> getUsername(HttpSession session) {
+        String username = (String) session.getAttribute("loggedInUser");
+        if (username == null) {
+            return ResponseEntity.status(401).body("로그인이 필요합니다.");
+        }
+        String name = userService.getNameByUsername(username);
+        return ResponseEntity.ok(name);
     }
 }
