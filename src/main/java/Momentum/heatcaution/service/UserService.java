@@ -54,6 +54,7 @@ public class UserService {
         return userRepository.findByUsername(username)
                 .orElseThrow(UserNotFoundException::new)
                 .getName();
+    }
 
     @Transactional
     public String updateUsername(String currentUsername, String newUsername) {
