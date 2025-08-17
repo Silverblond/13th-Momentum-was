@@ -2,6 +2,7 @@ package Momentum.heatcaution.controller;
 
 import Momentum.heatcaution.dto.LoginRequest;
 import Momentum.heatcaution.dto.RegisterRequest;
+import Momentum.heatcaution.exception.LoginRequiredException;
 import Momentum.heatcaution.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -13,6 +14,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Tag(name = "User API", description = "일반 사용자용 API (회원가입, 로그인, 로그아웃)")
 @RestController
@@ -60,5 +63,14 @@ public class UserController {
             return ResponseEntity.ok(logoutMessage);
         }
         return ResponseEntity.ok("로그아웃할 세션이 없습니다.");
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> getMyUsername(HttpSession session) {
+        String username = (String) session.getAttribute("loggedInUser");
+        if (username == null) {
+            throw new LoginRequiredException();
+        }
+        return ResponseEntity.ok(Map.of("username", username));
     }
 }
