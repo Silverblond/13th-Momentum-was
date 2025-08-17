@@ -66,6 +66,13 @@ public class UserController {
         return ResponseEntity.ok("로그아웃할 세션이 없습니다.");
     }
 
+    @Operation(summary = "내 아이디 변경", description = "현재 로그인된 사용자의 아이디(username)를 새로운 값으로 변경합니다. 변경 후에는 세션 정보도 갱신됩니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "아이디 변경 성공"),
+            @ApiResponse(responseCode = "400", description = "입력값이 비어있음"),
+            @ApiResponse(responseCode = "401", description = "로그인 필요"),
+            @ApiResponse(responseCode = "409", description = "이미 사용 중인 아이디 (Conflict)")
+    })
     @PatchMapping("/username")
     public ResponseEntity<?> updateUsername(@RequestBody @Valid UpdateUsernameRequest request, HttpSession session) {
         String username = (String) session.getAttribute("loggedInUser");
