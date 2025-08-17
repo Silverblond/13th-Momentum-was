@@ -66,6 +66,18 @@ public class UserController {
         return ResponseEntity.ok("로그아웃할 세션이 없습니다.");
     }
 
+    //사용자 이름 반환
+    @Operation(summary = "사용자 이름 조회", description = "회원가입한 사용자의 이름을 반환합니다.")
+    @ApiResponse(responseCode = "200", description = "사용자 이름 반환 성공")
+    @GetMapping("/name")
+    public ResponseEntity<String> getUsername(HttpSession session) {
+        String username = (String) session.getAttribute("loggedInUser");
+        if (username == null) {
+            return ResponseEntity.status(401).body("로그인이 필요합니다.");
+        }
+        String name = userService.getNameByUsername(username);
+        return ResponseEntity.ok(name);
+
     @Operation(summary = "내 아이디 변경", description = "현재 로그인된 사용자의 아이디(username)를 새로운 값으로 변경합니다. 변경 후에는 세션 정보도 갱신됩니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "아이디 변경 성공"),
