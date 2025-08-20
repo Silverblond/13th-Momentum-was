@@ -1,5 +1,6 @@
 package Momentum.heatcaution.service;
 
+import Momentum.heatcaution.dto.HealthDataDto;
 import Momentum.heatcaution.dto.HealthDataRequest;
 import Momentum.heatcaution.entity.HealthData;
 import Momentum.heatcaution.entity.User;
@@ -29,5 +30,15 @@ public class HealthDataService {
                 .build();
 
         healthDataRepository.save(healthData);
+    }
+
+    @Transactional(readOnly = true)
+    public HealthDataDto getHealthDataForUser(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException());
+
+        return healthDataRepository.findTopByUserOrderByMeasurementTimeDesc(user)
+                .map(HealthDataDto::from)
+                .orElse(null);
     }
 }
