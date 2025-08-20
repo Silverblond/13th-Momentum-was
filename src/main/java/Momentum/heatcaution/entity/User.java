@@ -23,6 +23,8 @@ public class User {
     private String name;
     private LocalDate birth;
     private String phone;
+    private Boolean hasWatch = false;
+    private LocalDateTime updateAt;
 
     @Enumerated(EnumType.STRING)
     private Role role;
