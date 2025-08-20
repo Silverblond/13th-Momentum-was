@@ -1,4 +1,9 @@
 package Momentum.heatcaution.dto;
 
-public class HealthDataRequest {
-}
+import java.time.LocalDateTime;
+
+public record HealthDataRequest (
+        LocalDateTime measurementTime,
+        Double heartRate,
+        Double bodyTemperature
+) {}
