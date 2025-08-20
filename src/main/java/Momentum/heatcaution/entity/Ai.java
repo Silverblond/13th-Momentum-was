@@ -5,32 +5,29 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "health_data")
-public class HealthData {
+@Table(name = "ai_predictions")
+public class Ai {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // PK
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user; // 유저 id (FK)
 
-    private Double heartRate; // 심박수
-    private Double bodyTemperature; // 체온
-    private LocalDateTime measurementTime; // 측정 시간
+    private Double heartRate;
+    private LocalDateTime predictionTime = LocalDateTime.now(); // *시간은 상세페이지를 위해 필요함*
 
-    public HealthData(User user, Double heartRate, Double bodyTemperature, LocalDateTime measurementTime) {
+    public Ai(User user, Double heartRate, LocalDateTime predictionTime) {
         this.user = user;
         this.heartRate = heartRate;
-        this.bodyTemperature = bodyTemperature;
-        this.measurementTime = measurementTime;
+        if (predictionTime != null) this.predictionTime = predictionTime;
     }
 }
 
