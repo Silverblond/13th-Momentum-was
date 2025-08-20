@@ -1,5 +1,6 @@
 package Momentum.heatcaution.controller;
 
+import Momentum.heatcaution.dto.HealthDataDto;
 import Momentum.heatcaution.dto.HealthDataRequest;
 import Momentum.heatcaution.exception.LoginRequiredException;
 import Momentum.heatcaution.service.HealthDataService;
@@ -9,12 +10,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Health Data API", description = "건강 데이터 수신 API")
 @RestController
@@ -39,5 +38,18 @@ public class HealthDataController {
         healthDataService.saveHealthData(username, healthDataRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @Operation(summary = "가장 최근 건강 데이터 조회", description = "로그인된 사용자의 가장 마지막 측정 기록 1개를 조회합니다.")
+    @ApiResponse(responseCode = "200", description = "데이터 조회 성공. 데이터가 없으면 null 반환")
+    @GetMapping("/latest")
+    public ResponseEntity<?> getMyLastHealthData(@Parameter(hidden = true) HttpSession session) {
+        String username = (String) session.getAttribute("loggedInUser");
+        if (username == null) {
+            throw new LoginRequiredException();
+        }
+
+        HealthDataDto lastestData = healthDataService.getHealthDataForUser(username);
+        return ResponseEntity.ok(lastestData);
     }
 }
