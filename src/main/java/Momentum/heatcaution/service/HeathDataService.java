@@ -4,6 +4,7 @@ import Momentum.heatcaution.dto.HealthDataRequest;
 import Momentum.heatcaution.entity.HealthData;
 import Momentum.heatcaution.entity.User;
 import Momentum.heatcaution.exception.UserNotFoundException;
+import Momentum.heatcaution.repository.HealthDataRepository;
 import Momentum.heatcaution.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
