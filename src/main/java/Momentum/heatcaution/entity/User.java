@@ -25,6 +25,7 @@ public class User {
     private String phone;
     private Boolean hasWatch = false;
     private LocalDateTime updateAt;
+    private String profileImageUrl;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -42,6 +43,7 @@ public class User {
         this.birth = birth;
         this.phone = phone;
         this.role = (role != null ? role : Role.USER); // 전달값 없으면 USER
+        this.profileImageUrl = profileImageUrl;
     }
 
     // username 업데이트
@@ -51,5 +53,9 @@ public class User {
 
     public enum Role {
         USER, ADMIN
+    }
+    //profileImageUrl 업데이트
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
     }
 }

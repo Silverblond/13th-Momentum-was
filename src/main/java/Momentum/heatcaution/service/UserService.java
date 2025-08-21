@@ -33,6 +33,7 @@ public class UserService {
 
         return userRepository.save(user).getId();
     }
+
     public String login(LoginRequest request) {
         User user = userRepository.findByUsername(request.username())
                 .orElseThrow(UserNotFoundException::new);
@@ -43,6 +44,7 @@ public class UserService {
 
         return "로그인 성공";
     }
+
     //로그아웃
     public String logout(String username) {
         return username + " 로그아웃 성공";
@@ -70,5 +72,39 @@ public class UserService {
         user.updateUsername(newUsername);
 
         return user.getUsername();
+    }
+
+    //프로필 이미지 URL 저장
+    @Transactional
+    public String saveProfileImageUrl(String username, String imageUrl) {
+        //DB 조회
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(UserNotFoundException::new);
+
+        //ProfileImageUrl 변경
+        user.setProfileImageUrl(imageUrl);
+        userRepository.save(user);
+
+        return user.getProfileImageUrl();
+    }
+
+    //프로필 이미지 수정
+    @Transactional
+    public String updateProfileImageUrl(String username, String newImageUrl) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(UserNotFoundException::new);
+        user.setProfileImageUrl(newImageUrl);
+        userRepository.save(user);
+
+        return user.getProfileImageUrl();
+    }
+
+    //프로필 이미지 조회
+    @Transactional(readOnly = true)
+    public String getProfileImageUrl(String username) {
+        //DB 조회
+        return userRepository.findByUsername(username)
+            .orElseThrow(UserNotFoundException::new)
+                .getProfileImageUrl();
     }
 }
