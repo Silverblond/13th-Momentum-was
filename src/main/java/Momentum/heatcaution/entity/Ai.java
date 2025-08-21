@@ -2,6 +2,7 @@ package Momentum.heatcaution.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,6 +25,7 @@ public class Ai {
     private Double heartRate;
     private LocalDateTime predictionTime = LocalDateTime.now(); // *시간은 상세페이지를 위해 필요함*
 
+    @Builder
     public Ai(User user, Double heartRate, LocalDateTime predictionTime) {
         this.user = user;
         this.heartRate = heartRate;

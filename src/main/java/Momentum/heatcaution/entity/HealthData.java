@@ -2,6 +2,7 @@ package Momentum.heatcaution.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,6 +27,7 @@ public class HealthData {
     private Double bodyTemperature; // 체온
     private LocalDateTime measurementTime; // 측정 시간
 
+    @Builder
     public HealthData(User user, Double heartRate, Double bodyTemperature, LocalDateTime measurementTime) {
         this.user = user;
         this.heartRate = heartRate;
