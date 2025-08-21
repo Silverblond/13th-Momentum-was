@@ -1,11 +1,14 @@
 package Momentum.heatcaution.controller;
 
 import Momentum.heatcaution.dto.LoginRequest;
+import Momentum.heatcaution.dto.ProfileImageRequest;
 import Momentum.heatcaution.dto.RegisterRequest;
 import Momentum.heatcaution.dto.UpdateUsernameRequest;
 import Momentum.heatcaution.exception.LoginRequiredException;
 import Momentum.heatcaution.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,8 +18,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
-import java.util.Map;
 
 @Tag(name = "User API", description = "일반 사용자용 API (회원가입, 로그인, 로그아웃)")
 @RestController
@@ -99,5 +102,68 @@ public class UserController {
         session.setAttribute("loggedInUser", updatedUsername);
 
         return ResponseEntity.ok("아이디가 성공적으로 변경되었습니다.");
+    }
+
+    @Operation(summary = "사용자 프로필 이미지 저장", description = "로그인된 사용자의 프로필 이미지 URL을 저장합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "프로필 이미지 저장 성공"),
+            @ApiResponse(responseCode = "401", description = "로그인 필요"),
+            @ApiResponse(responseCode = "404", description = "사용자를 찾을 수 없음")
+    })
+    @PostMapping("/profile-image")
+    public ResponseEntity<String> saveProfileImage(
+            @RequestBody(
+                    description = "프로필 이미지 URL 요청",
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = {
+                                    @ExampleObject(name = "예시 1 (여우)",
+                                            value = "{\"profileImageUrl\":\"http://localhost:8080/images/profile1.png\"}"),
+                                    @ExampleObject(name = "예시 2 (파란색 패턴)",
+                                            value = "{\"profileImageUrl\":\"http://localhost:8080/images/profile2.png\"}"),
+                                    @ExampleObject(name = "예시 3 (초록색)",
+                                            value = "{\"profileImageUrl\":\"http://localhost:8080/images/profile3.png\"}")
+                            }
+                    )
+            )
+            ProfileImageRequest request, HttpSession session) {
+        String username = (String) session.getAttribute("loggedInUser");
+        if (username == null) {
+            throw new LoginRequiredException();
+        }
+        String savedImageUrl = userService.saveProfileImageUrl(username, request.profileImageUrl());
+        return ResponseEntity.ok(savedImageUrl);
+    }
+
+    @Operation(summary = "사용자 프로필 이미지 조회", description = "로그인된 사용자의 프로필 이미지 URL을 조회합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "프로필 이미지 조회 성공"),
+            @ApiResponse(responseCode = "401", description = "로그인 필요"),
+            @ApiResponse(responseCode = "404", description = "사용자를 찾을 수 없음")
+    })
+    @GetMapping("/profile-image")
+    public ResponseEntity<String> getProfileImage(HttpSession session) {
+        String username = (String) session.getAttribute("loggedInUser");
+        if (username == null) {
+            throw new LoginRequiredException();
+        }
+        String profileImageUrl = userService.getProfileImageUrl(username);
+        return ResponseEntity.ok(profileImageUrl);
+    }
+
+    @Operation(summary = "사용자 프로필 이미지 수정", description = "로그인된 사용자의 프로필 이미지 URL을 수정합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "프로필 이미지 수정 성공"),
+            @ApiResponse(responseCode = "401", description = "로그인 필요"),
+            @ApiResponse(responseCode = "404", description = "사용자를 찾을 수 없음")
+    })
+    @PutMapping("/profile-image")
+    public ResponseEntity<String> updateProfileImage(@RequestBody ProfileImageRequest request, HttpSession session) {
+        String username = (String) session.getAttribute("loggedInUser");
+        if (username == null) {
+            throw new LoginRequiredException();
+        }
+        String updatedImageUrl = userService.updateProfileImageUrl(username, request.profileImageUrl());
+        return ResponseEntity.ok(updatedImageUrl);
     }
 }
