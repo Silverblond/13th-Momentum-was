@@ -7,9 +7,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @OpenAPIDefinition(
-        info = @Info(title = "Ondobi API", version = "1.0"),
+        info = @Info(title = "Ondomi API", version = "1.0"),
         servers = {
-                @Server(url = "https://ondobi.site", description = "Production Server"),
+                @Server(url = "https://ondomi.site", description = "Production Server"),
                 @Server(url = "http://localhost:8080", description = "Local Server")
         }
 )
