@@ -10,7 +10,8 @@ import org.springframework.context.annotation.Configuration;
         info = @Info(title = "Ondomi API", version = "1.0"),
         servers = {
                 @Server(url = "https://ondomi.site", description = "Production Server"),
-                @Server(url = "http://localhost:8080", description = "Local Server")
+                @Server(url = "http://localhost:8080", description = "Local Server"),
+                @Server(url = "https://web.byeolhome.me", description = "임시 서버")
         }
 )
 public class SwaggerConfig {
