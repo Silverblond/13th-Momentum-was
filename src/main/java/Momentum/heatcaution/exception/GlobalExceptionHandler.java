@@ -16,7 +16,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValid(MethodArgumentNotValidException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ErrorResponse.of("VALIDATION_ERROR", "요청 값이 올바르지 않습니다."));
+                .body(ErrorResponse.of("VALIDATION_ERROR", e.getMessage()));
     }
 
     // JSON 파싱 실패/타입 불일치
