@@ -72,7 +72,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleAny(Exception e) {
         //e.printStackTrace();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(ErrorResponse.of("INTERNAL_ERROR", e.getMessage()));
+                .body(ErrorResponse.of("INTERNAL_ERROR", e.toString()));
     }
 }
 
