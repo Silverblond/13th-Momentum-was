@@ -43,7 +43,6 @@ public class User {
         this.birth = birth;
         this.phone = phone;
         this.role = (role != null ? role : Role.USER); // 전달값 없으면 USER
-        this.profileImageUrl = profileImageUrl;
     }
 
     // username 업데이트

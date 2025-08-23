@@ -9,6 +9,7 @@ import Momentum.heatcaution.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,7 +19,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+//import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody; // ✅ 스프링 것만 사용
+
 
 
 @Tag(name = "User API", description = "일반 사용자용 API (회원가입, 로그인, 로그아웃)")
@@ -104,18 +107,15 @@ public class UserController {
         return ResponseEntity.ok("아이디가 성공적으로 변경되었습니다.");
     }
 
-    @Operation(summary = "사용자 프로필 이미지 저장", description = "로그인된 사용자의 프로필 이미지 URL을 저장합니다.")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "프로필 이미지 저장 성공"),
-            @ApiResponse(responseCode = "401", description = "로그인 필요"),
-            @ApiResponse(responseCode = "404", description = "사용자를 찾을 수 없음")
-    })
-    @PostMapping("/profile-image")
-    public ResponseEntity<String> saveProfileImage(
-            @RequestBody(
+    @Operation(
+            summary = "사용자 프로필 이미지 저장",
+            description = "로그인된 사용자의 프로필 이미지 URL을 저장합니다.",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "프로필 이미지 URL 요청",
+                    required = true,
                     content = @Content(
                             mediaType = "application/json",
+                            schema = @Schema(implementation = ProfileImageRequest.class),
                             examples = {
                                     @ExampleObject(name = "예시 1 (여우)",
                                             value = "{\"profileImageUrl\":\"http://localhost:8080/images/profile1.png\"}"),
@@ -126,7 +126,17 @@ public class UserController {
                             }
                     )
             )
-            ProfileImageRequest request, HttpSession session) {
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "프로필 이미지 저장 성공"),
+            @ApiResponse(responseCode = "401", description = "로그인 필요"),
+            @ApiResponse(responseCode = "404", description = "사용자를 찾을 수 없음")
+    })
+    @PostMapping("/profile-image")
+    public ResponseEntity<String> saveProfileImage(
+            @RequestBody ProfileImageRequest request,
+            HttpSession session
+    ) {
         String username = (String) session.getAttribute("loggedInUser");
         if (username == null) {
             throw new LoginRequiredException();

@@ -21,6 +21,10 @@ public class UserService {
 
     @Transactional
     public Long register(RegisterRequest req) {
+        System.out.println(req.birth());
+        System.out.println(req.password());
+        System.out.println(req.name());
+
 
         // 엔티티 변환
         User user = User.builder()
@@ -28,7 +32,7 @@ public class UserService {
                 .password(req.password()) // 암호화 없음
                 .name(req.name())
                 .phone(req.phone())
-                .birth(LocalDate.parse(req.birth()))
+                .birth(req.birth())
                 .build();
 
         return userRepository.save(user).getId();
