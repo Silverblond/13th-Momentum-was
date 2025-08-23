@@ -23,14 +23,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorResponse> handleNotReadable(HttpMessageNotReadableException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ErrorResponse.of("MESSAGE_NOT_READABLE", "요청 본문을 읽을 수 없습니다."));
+                .body(ErrorResponse.of("MESSAGE_NOT_READABLE", e.getMessage()));
     }
 
     // DB 제약 위반(username 중복 발생시)
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ErrorResponse> handleDataIntegrity(DataIntegrityViolationException e) {
         return ResponseEntity.status(HttpStatus.CONFLICT)
-                .body(ErrorResponse.of("DATA_INTEGRITY_VIOLATION", "데이터 무결성 위반입니다."));
+                .body(ErrorResponse.of("DATA_INTEGRITY_VIOLATION", e.getMessage()));
     }
 
     // 사용자 없음
@@ -72,7 +72,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleAny(Exception e) {
         //e.printStackTrace();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(ErrorResponse.of("INTERNAL_ERROR", "서버 오류가 발생했습니다."));
+                .body(ErrorResponse.of("INTERNAL_ERROR", e.getMessage()));
     }
 }
 
