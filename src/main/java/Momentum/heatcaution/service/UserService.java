@@ -63,19 +63,16 @@ public class UserService {
     }
 
     @Transactional
-    public String updateUsername(String currentUsername, String newUsername) {
-        //새로운 아이디가 이미 존재하는지
-        if (userRepository.existsByUsername(newUsername)) {
-            throw new IllegalStateException("이미 사용 중인 아이디 입니다.");
-        }
+    public String updateName(String username, String newName) {
+
         //현재 사용자 DB 조회
-        User user = userRepository.findByUsername(currentUsername)
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(UserNotFoundException::new);
 
         //User 엔티티의 username 변경
-        user.updateUsername(newUsername);
+        user.updateName(newName);
 
-        return user.getUsername();
+        return user.getName();
     }
 
     //프로필 이미지 URL 저장
@@ -108,7 +105,7 @@ public class UserService {
     public String getProfileImageUrl(String username) {
         //DB 조회
         return userRepository.findByUsername(username)
-            .orElseThrow(UserNotFoundException::new)
+                .orElseThrow(UserNotFoundException::new)
                 .getProfileImageUrl();
     }
 }

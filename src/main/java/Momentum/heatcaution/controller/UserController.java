@@ -3,7 +3,7 @@ package Momentum.heatcaution.controller;
 import Momentum.heatcaution.dto.LoginRequest;
 import Momentum.heatcaution.dto.ProfileImageRequest;
 import Momentum.heatcaution.dto.RegisterRequest;
-import Momentum.heatcaution.dto.UpdateUsernameRequest;
+import Momentum.heatcaution.dto.UpdateNameRequest;
 import Momentum.heatcaution.exception.LoginRequiredException;
 import Momentum.heatcaution.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 //import io.swagger.v3.oas.annotations.parameters.RequestBody;
-import org.springframework.web.bind.annotation.RequestBody; // ✅ 스프링 것만 사용
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -76,7 +76,7 @@ public class UserController {
     @Operation(summary = "사용자 이름 조회", description = "회원가입한 사용자의 이름을 반환합니다.")
     @ApiResponse(responseCode = "200", description = "사용자 이름 반환 성공")
     @GetMapping("/name")
-    public ResponseEntity<String> getUsername(HttpSession session) {
+    public ResponseEntity<String> getName(HttpSession session) {
         String username = (String) session.getAttribute("loggedInUser");
         if (username == null) {
             return ResponseEntity.status(401).body("로그인이 필요합니다.");
@@ -85,26 +85,26 @@ public class UserController {
         return ResponseEntity.ok(name);
     }
 
-    @Operation(summary = "내 아이디 변경", description = "현재 로그인된 사용자의 아이디(username)를 새로운 값으로 변경합니다. 변경 후에는 세션 정보도 갱신됩니다.")
+    @Operation(summary = "사용자 이름 변경", description = "현재 로그인된 사용자의 이름을 새로운 값으로 변경합니다. 변경 후에는 세션 정보도 갱신됩니다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "아이디 변경 성공"),
+            @ApiResponse(responseCode = "200", description = "이름 변경 성공"),
             @ApiResponse(responseCode = "400", description = "입력값이 비어있음"),
             @ApiResponse(responseCode = "401", description = "로그인 필요"),
-            @ApiResponse(responseCode = "409", description = "이미 사용 중인 아이디 (Conflict)")
+            @ApiResponse(responseCode = "404", description = "사용자를 찾을 수 없음")
     })
 
-    @PatchMapping("/username")
-    public ResponseEntity<?> updateUsername(@RequestBody @Valid UpdateUsernameRequest request, HttpSession session) {
+    @PatchMapping("/name")
+    public ResponseEntity<?> updateName(@RequestBody @Valid UpdateNameRequest request, HttpSession session) {
         String username = (String) session.getAttribute("loggedInUser");
         if (username == null) {
             throw new LoginRequiredException();
         }
-        //DB와 엔티티 username 변경
-        String updatedUsername = userService.updateUsername(username, request.newUsername());
-        //세션에 저장된 username정보 변경
-        session.setAttribute("loggedInUser", updatedUsername);
+        //DB와 엔티티 name 변경
+        String updatedName = userService.updateName(username, request.newName());
+        //세션에 저장된 name 정보 변경
+        session.setAttribute("loggedInName", updatedName);
 
-        return ResponseEntity.ok("아이디가 성공적으로 변경되었습니다.");
+        return ResponseEntity.ok("이름이 성공적으로 변경되었습니다.");
     }
 
     @Operation(
