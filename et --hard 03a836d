@@ -1,0 +1,20 @@
+[33m633c8a3[m[33m ([m[1;31morigin/develop[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge pull request #20 from Likelion-YeungNam-Univ/feature/fix0824
+[33m03a836d[m[33m ([m[1;31morigin/feature/fix0824[m[33m)[m fix: 사용자 이름 변경 api
+[33m1d21ef6[m[33m ([m[1;31morigin/feature/fix[m[33m)[m fix: session 수정
+[33m6ef5fef[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdevelop[m[33m)[m fix: register 수정
+[33m1dfd329[m fix: e.toString 적용
+[33me33ea48[m fix: e.getMessage 적용
+[33m9ba3c5c[m fix: registerdto
+[33mac79702[m fix: e.getMessage()
+[33m4a68c49[m fix: CORS 수정
+[33me4c2ee3[m Merge pull request #18 from Likelion-YeungNam-Univ/feature/fix
+[33m8644727[m fix: swagger 수정
+[33mfc8361f[m fix: cors 수정
+[33m1c8622d[m fix: swaggerconfig server 추가
+[33m029c51d[m Merge pull request #17 from Likelion-YeungNam-Univ/feature/fix
+[33m0160554[m fix: cors 수정
+[33m45d1bd5[m fix: 환경변수 설정
+[33m5334ea2[m fix: CORS config 중괄호 오류
+[33mc38f7f3[m Merge branch 'develop' of https://github.com/Likelion-YeungNam-Univ/13th-Momentum-was into develop
+[33m485c094[m Merge pull request #16 from Likelion-YeungNam-Univ/feature/config
+[33mb597534[m[33m ([m[1;31morigin/feature/config[m[33m)[m Merge branch 'develop' into feature/config
