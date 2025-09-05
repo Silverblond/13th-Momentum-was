@@ -1,4 +1,4 @@
-# 13th-Momentum-web
+# 13th-Momentum-was
 🦁영남대 멋쟁이사자처럼 13기 Momentum입니다
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/d16247d4-71e9-4d52-afa5-df88b206c9ea" />
